@@ -87,6 +87,8 @@ public interface ConnectionManager {
             cm = new SentinelConnectionManager((SentinelServersConfig) cfg, configCopy);
         } else if (cfg instanceof ClusterServersConfig) {
             cm = new ClusterConnectionManager((ClusterServersConfig) cfg, configCopy);
+        } else if (cfg instanceof AwsReplicatedServersConfig) {
+            cm = new AwsReplicatedConnectionManager((AwsReplicatedServersConfig) cfg, configCopy);
         } else if (cfg instanceof ReplicatedServersConfig) {
             cm = new ReplicatedConnectionManager((ReplicatedServersConfig) cfg, configCopy);
         }

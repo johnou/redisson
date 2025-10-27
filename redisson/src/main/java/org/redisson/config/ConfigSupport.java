@@ -97,6 +97,9 @@ public class ConfigSupport {
         @JsonProperty
         ReplicatedServersConfig replicatedServersConfig;
 
+        @JsonProperty
+        AwsReplicatedServersConfig awsReplicatedServersConfig;
+
     }
 
     protected final ObjectMapper jsonMapper = createMapper(null, null);
@@ -211,6 +214,9 @@ public class ConfigSupport {
         } else if (configCopy.getClusterServersConfig() != null) {
             validate(configCopy.getClusterServersConfig());
             return configCopy.getClusterServersConfig();
+        } else if (configCopy.getAwsReplicatedServersConfig() != null) {
+            validate(configCopy.getAwsReplicatedServersConfig());
+            return configCopy.getAwsReplicatedServersConfig();
         } else if (configCopy.getReplicatedServersConfig() != null) {
             validate(configCopy.getReplicatedServersConfig());
             return configCopy.getReplicatedServersConfig();

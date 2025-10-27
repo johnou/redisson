@@ -58,6 +58,8 @@ public class Config {
 
     private ReplicatedServersConfig replicatedServersConfig;
 
+    private AwsReplicatedServersConfig awsReplicatedServersConfig;
+
     private String password;
 
     private String username;
@@ -171,6 +173,9 @@ public class Config {
         if (oldConf.getReplicatedServersConfig() != null) {
             setReplicatedServersConfig(new ReplicatedServersConfig(oldConf.getReplicatedServersConfig()));
         }
+        if (oldConf.getAwsReplicatedServersConfig() != null) {
+            setAwsReplicatedServersConfig(new AwsReplicatedServersConfig(oldConf.getAwsReplicatedServersConfig()));
+        }
     }
 
     public NettyHook getNettyHook() {
@@ -242,6 +247,7 @@ public class Config {
         checkSentinelServersConfig();
         checkSingleServerConfig();
         checkReplicatedServersConfig();
+        checkAwsReplicatedServersConfig();
 
         if (clusterServersConfig == null) {
             clusterServersConfig = config;
@@ -272,6 +278,7 @@ public class Config {
         checkMasterSlaveServersConfig();
         checkSentinelServersConfig();
         checkSingleServerConfig();
+        checkAwsReplicatedServersConfig();
 
         if (replicatedServersConfig == null) {
             replicatedServersConfig = config;
@@ -288,6 +295,36 @@ public class Config {
     }
 
     /**
+     * Init AWS replicated servers configuration.
+     *
+     * @return AwsReplicatedServersConfig
+     */
+    public AwsReplicatedServersConfig useAwsReplicatedServers() {
+        return useAwsReplicatedServers(new AwsReplicatedServersConfig());
+    }
+
+    AwsReplicatedServersConfig useAwsReplicatedServers(AwsReplicatedServersConfig config) {
+        checkClusterServersConfig();
+        checkMasterSlaveServersConfig();
+        checkSentinelServersConfig();
+        checkSingleServerConfig();
+        checkReplicatedServersConfig();
+
+        if (awsReplicatedServersConfig == null) {
+            awsReplicatedServersConfig = config;
+        }
+        return awsReplicatedServersConfig;
+    }
+
+    protected AwsReplicatedServersConfig getAwsReplicatedServersConfig() {
+        return awsReplicatedServersConfig;
+    }
+
+    protected void setAwsReplicatedServersConfig(AwsReplicatedServersConfig awsReplicatedServersConfig) {
+        this.awsReplicatedServersConfig = awsReplicatedServersConfig;
+    }
+
+    /**
      * Init single server configuration.
      *
      * @return SingleServerConfig
@@ -301,6 +338,7 @@ public class Config {
         checkMasterSlaveServersConfig();
         checkSentinelServersConfig();
         checkReplicatedServersConfig();
+        checkAwsReplicatedServersConfig();
 
         if (singleServerConfig == null) {
             singleServerConfig = config;
@@ -330,6 +368,7 @@ public class Config {
         checkSingleServerConfig();
         checkMasterSlaveServersConfig();
         checkReplicatedServersConfig();
+        checkAwsReplicatedServersConfig();
 
         if (this.sentinelServersConfig == null) {
             this.sentinelServersConfig = sentinelServersConfig;
@@ -359,6 +398,7 @@ public class Config {
         checkSingleServerConfig();
         checkSentinelServersConfig();
         checkReplicatedServersConfig();
+        checkAwsReplicatedServersConfig();
 
         if (masterSlaveServersConfig == null) {
             masterSlaveServersConfig = config;
@@ -488,6 +528,12 @@ public class Config {
     private void checkReplicatedServersConfig() {
         if (replicatedServersConfig != null) {
             throw new IllegalStateException("Replication servers config already used!");
+        }
+    }
+
+    private void checkAwsReplicatedServersConfig() {
+        if (awsReplicatedServersConfig != null) {
+            throw new IllegalStateException("AWS replication servers config already used!");
         }
     }
 

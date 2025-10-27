@@ -27,6 +27,7 @@
         <maven.compiler.testRelease>21</maven.compiler.testRelease>
         <maven.compiler.testSource>21</maven.compiler.testSource>
         <maven.compiler.testTarget>21</maven.compiler.testTarget>
+        <aws.sdk.version>2.25.28</aws.sdk.version>
         <argLine />
     </properties>
 
